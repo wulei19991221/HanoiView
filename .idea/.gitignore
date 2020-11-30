@@ -1,0 +1,8 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Datasource local storage ignored files
+/../../../../../../:\python\上课内容\turtle库的使用\HanoiView\.idea/dataSources/
+/dataSources.local.xml
+# 基于编辑器的 HTTP 客户端请求
+/httpRequests/
