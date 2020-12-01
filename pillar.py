@@ -13,8 +13,6 @@ class Pillar:
     # 柱子宽度和高度
     __height = 400
     __width = 150
-    center_x = 0
-    center_y = __height
 
     def __init__(self, pen: t.Pen, x: int, y: int, width: int, name: str):
         self.__pen = pen
@@ -35,10 +33,11 @@ class Pillar:
         self.__pen.goto(self.x, self.y)
         self.__pen.down()
 
-    def toCenter(self):
+    def toCenter(self, isDown=True):
         self.__pen.up()
         self.__pen.goto(self.center_x, self.center_y)
-        self.__pen.down()
+        if isDown:
+            self.__pen.down()
 
     # 返回随机颜色代码
     def getColor(self):
@@ -52,12 +51,21 @@ class Pillar:
         # 画支柱
         self.__pen.right(90)
         self.__pen.forward(self.__height)
-        self.toCenter()
+        self.toCenter(isDown=False)
         # 画字母
         self.__pen.forward(-50)
+        self.__pen.down()
         self.__pen.color(self.getColor())
         self.__pen.write(self.name, align='center', font=('Arial', 18, 'normal'))
 
     # 返回柱子底部中心坐标
-    def getCenterPosition(self):
+    def getCenterPosition(self) -> (int, int):
         return self.center_x, self.center_y
+
+    # 返回柱子宽度和高度
+    def getWidthHeight(self):
+        return self.__width, self.__height
+
+    # 返回画笔对象
+    def getPen(self):
+        return self.__pen

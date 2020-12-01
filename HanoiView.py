@@ -3,25 +3,28 @@
 # @Author:ACHIEVE_DREAM
 # @Time: 2020年11月30日18时
 # @File: HanoiView.py
+import time
 import turtle as t
 from pillar import Pillar
 from threading import Thread
 from queue import Queue
+from rect import Rect
 
 
 class HanoiViewer:
     screen = t.Screen()
-    # pillarOfThree = []
     pillarName = ('A', 'B', 'C')
     WIDTH = 800
     HEIGHT = 600
     pillarQueue = Queue(maxsize=3)
+    __pillarList = []
 
     def __init__(self, n: int):
         self.num = n
         self.setScreen()
         self.putPillar()
         self.threadsOfDraw()
+        self.drawPlate()
 
     # 初始化屏幕
     def setScreen(self):
@@ -34,6 +37,7 @@ class HanoiViewer:
     def drawThreePillar(self):
         while not self.pillarQueue.empty():
             p = self.pillarQueue.get()
+            self.__pillarList.append(p)
             p.draw()
 
     def putPillar(self):
@@ -43,7 +47,6 @@ class HanoiViewer:
             p = Pillar(t.Pen(), x, y, width, self.pillarName[index])
             index += 1
             self.pillarQueue.put(p)
-            # self.pillarOfThree.append(p)
 
     def getXAndYList(self):
         x_y_list = []
@@ -61,12 +64,14 @@ class HanoiViewer:
         self.screen.mainloop()
 
     def threadsOfDraw(self):
-        t_s = []
         for _ in range(3):
             td = Thread(target=self.drawThreePillar)
             td.start()
-        for td in t_s:
-            td.join()
+        # time.sleep(3)
+
+    def drawPlate(self):
+        rect_A = Rect(self.__pillarList[0])
+        rect_A.drawRect()
 
 
 if __name__ == '__main__':
