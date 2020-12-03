@@ -27,7 +27,7 @@ class Pillar:
         self.initPen()
 
     def initPen(self):
-        self.__pen.speed(8)
+        self.__pen.speed(0)
         self.__pen.hideturtle()
         self.__pen.speed(5)
         self.__pen.color(self.getColor())
@@ -64,3 +64,6 @@ class Pillar:
     # 返回柱子底部中心坐标
     def getCenterPosition(self) -> (int, int):
         return self.center_x, self.center_y
+
+    def __repr__(self):
+        return self.name

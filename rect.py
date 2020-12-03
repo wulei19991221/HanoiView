@@ -8,10 +8,12 @@ import turtle as t
 
 
 class Plate:
-    __pen = t.Pen()
-    __pen.hideturtle()
+    pen = t.Pen()
+    pen.hideturtle()
+    width = 0
 
-    def __init__(self, pillar: Pillar, width: int):
+    def __init__(self, pillar: Pillar, width: int, name: str):
+        self.name = name
         # 柱子
         self.pillar = pillar
         self.initPen()
@@ -22,16 +24,23 @@ class Plate:
         self.leftPosition = self.center_x - self.width // 2
 
     def initPen(self):
-        self.__pen.color(self.pillar.getColor())
-        self.__pen.speed(6)
-        self.__pen.pensize(30)
+        self.pen.color(self.pillar.getColor())
+        self.pen.speed(1)
+        self.pen.pensize(30)
 
     # 画盘子
     def drawRect(self):
-        self.__pen.up()
-        self.__pen.goto(self.leftPosition, self.height)
-        self.__pen.down()
-        self.__pen.setheading(0)
-        self.__pen.forward(self.width)
+        self.__init__(self.pillar, self.width, self.name)
+        self.pen.up()
+        self.pen.goto(self.leftPosition, self.height)
+        self.pen.down()
+        self.pen.setheading(0)
+        self.pen.color(self.pillar.getColor())
+        self.pen.forward(self.width)
+        self.pen.up()
+        self.pen.goto(self.center_x, self.height + 15)
+        self.pen.down()
+        self.pen.color('black')
+        self.pen.write(self.name, align='center', font=('Arial', 18, 'normal'))
         self.pillar.width -= 20
         self.pillar.center_y -= 30

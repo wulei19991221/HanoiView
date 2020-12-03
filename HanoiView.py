@@ -13,14 +13,26 @@ class HanoiViewer:
     pillarName = ('A', 'B', 'C')
     WIDTH = 800
     HEIGHT = 600
+    # 储存柱子对象
     __pillarList = []
+    # 储存盘子对象
+    __plateList = []
+    pen = t.Pen()
 
     def __init__(self, n: int):
         self.num = n
         self.setScreen()
+        self.initPen()
         self.putPillar()
         self.drawThreePillar()
         self.drawPlate()
+
+    def initPen(self):
+        self.pen.color('#fc5c65')
+        self.pen.hideturtle()
+        self.pen.up()
+        self.pen.goto(self.WIDTH // 2, 50)
+        self.pen.down()
 
     # 初始化屏幕
     def setScreen(self):
@@ -63,15 +75,36 @@ class HanoiViewer:
 
     # 屏幕显示
     def show(self):
+        a = self.__pillarList[0]
+        b = self.__pillarList[1]
+        c = self.__pillarList[2]
+        self.hanoi(self.num, a, b, c)
         self.screen.mainloop()
 
     def drawPlate(self):
         a_pillar = self.__pillarList[0]
         for i in range(self.num):
-            plate = Plate(a_pillar, a_pillar.width)
+            plate = Plate(a_pillar, a_pillar.width, str(self.num - i))
             plate.drawRect()
+            self.__plateList.append(plate)
+
+    def hanoi(self, n: int, a: Pillar, b: Pillar, c: Pillar):
+        if n > 0:
+            self.hanoi(n - 1, a, c, b)
+            # 第n个盘子从A到C
+            self.move(n, a, c)
+            self.hanoi(n - 1, b, a, c)
+
+    def move(self, n, a: Pillar, c: Pillar):
+        self.pen.clear()
+        self.pen.write(f'第{n}个盘子, 从{a.name}到{c.name}', font=('Arial', 18, 'normal'), align='center')
+        p: Plate = self.__plateList[self.num - n]
+        # p.pen.clear()
+        p.pillar = c
+        p.drawRect()
 
 
 if __name__ == '__main__':
-    view = HanoiViewer(3)
+    # 最大可叠个数: 8
+    view = HanoiViewer(5)
     view.show()
