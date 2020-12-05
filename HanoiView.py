@@ -106,5 +106,5 @@ class HanoiViewer:
 
 if __name__ == '__main__':
     # 最大可叠个数: 8
-    view = HanoiViewer(5)
+    view = HanoiViewer(3)
     view.show()
